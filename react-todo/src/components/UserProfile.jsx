@@ -1,11 +1,21 @@
 import { OldWay } from "./OldWay.jsx";
+import WelcomeUser, { SkillsList } from "./Elements.jsx";
 
 export function UserProfile() {
+  const skills = [
+    { id: 1, name: "JavaScript" },
+    { id: 2, name: "React" },
+    { id: 3, name: "Node.js" },
+  ];
+
   return (
     <div id="user-profile">
       <h2>User Profile</h2>
       <div>
-        <p>Name: John Doe</p>
+        <p>
+          Name: <WelcomeUser name="Omar" />
+        </p>
+
         <p>Email: omar.venturez@example.com</p>
       </div>
       <section>
@@ -14,12 +24,8 @@ export function UserProfile() {
           Hello! I'm Omar, a software developer with a passion for building web
           applications.
         </p>
-        <ul>
-          <h3>Skills</h3>
-          <li>JavaScript</li>
-          <li>React</li>
-          <li>Node.js</li>
-        </ul>
+        <h3>Skills</h3>
+        <SkillsList skills={skills} />
       </section>
       <div id="old-way">
         <h3>Old Way of Creating React Elements: </h3>

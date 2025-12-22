@@ -2,7 +2,7 @@
 
 // using destructuring to get name from props
 export default function WelcomeUser({ name }) {
-  return <span> {name}!</span>;
+  return <span>{name}!</span>;
 }
 
 // Usage Example:
@@ -10,24 +10,17 @@ export default function WelcomeUser({ name }) {
 
 // Creating Lists
 export function SkillsList({ skills }) {
-  const skillsList = ["JavaScript", "React", "Node.js"];
-
   return (
     <ul>
-      {skillsList.map((skill, index) => (
-        <li key={index}>{skill}</li>
+      {skills.map((skill) => (
+        <li key={skill.id}>{skill.name}</li>
       ))}
     </ul>
   );
 }
 
-// Usage Example:
-// <SkillsList />
-// or
-// <SkillsList skills={['JavaScript', 'React', 'Node.js']} />
-
 // Conditional Elements
-export function ConditionalGreeting({ isLoggedIn, name }) {
+export function ConditionalGreeting({ isLoggedIn, name, todos }) {
   return (
     <>
       {isLoggedIn ? (
@@ -35,9 +28,9 @@ export function ConditionalGreeting({ isLoggedIn, name }) {
           <h2> Welcome Back {name} </h2>
           <h3>My Todo</h3>
           <ul>
-            <li>Learn React</li>
-            <li>Build a Todo App</li>
-            <li>Master JavaScript</li>
+            {todos.map((todo) => (
+              <li key={todo.id}>{todo.text}</li>
+            ))}
           </ul>
         </>
       ) : (
