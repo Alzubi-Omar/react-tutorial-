@@ -1,5 +1,6 @@
 import { OldWay } from "./OldWay.jsx";
 import WelcomeUser, { SkillsList, AboutMe } from "./Elements.jsx";
+import { Card } from "./Elements.jsx";
 
 export function UserProfile() {
   const skills = [
@@ -18,12 +19,18 @@ export function UserProfile() {
 
         <p>Email: omar.venturez@example.com</p>
       </div>
-      <section>
+      {/* <section>
         <h3>About Me</h3>
         <AboutMe name="Omar" />
         <h3>Skills</h3>
         <SkillsList skills={skills} />
-      </section>
+      </section> */}
+      <Card title="About Me">
+        <AboutMe name="Omar" />
+      </Card>
+      <Card title="Skills">
+        <SkillsList skills={skills} />
+      </Card>
       <div id="old-way">
         <h3>Old Way of Creating React Elements: </h3>
         <OldWay />

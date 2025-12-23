@@ -1,7 +1,7 @@
 // Creating Elements with Data (Dynamic)
 
 // Props Valdiation and Usage
-import PropTypes from "prop-types";
+import PropTypes, { func } from "prop-types";
 
 // using destructuring to get name from props
 export default function WelcomeUser({ name }) {
@@ -53,12 +53,22 @@ export function AboutMe(props) {
   );
 }
 
+// Child component
+export function Card({ title, children }) {
+  return (
+    <div className="card">
+      <h3>{title}</h3>
+      {children}
+    </div>
+  );
+}
+
 // Prop Types Validation
-WelcomeUser.PropTypes = {
+WelcomeUser.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-SkillsList.PropTypes = {
+SkillsList.propTypes = {
   skills: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -80,4 +90,9 @@ ConditionalGreeting.propTypes = {
 
 AboutMe.propTypes = {
   name: PropTypes.string.isRequired,
+};
+
+Card.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
