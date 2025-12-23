@@ -1,5 +1,8 @@
 // Creating Elements with Data (Dynamic)
 
+// Props Valdiation and Usage
+import PropTypes from "prop-types";
+
 // using destructuring to get name from props
 export default function WelcomeUser({ name }) {
   return <span>{name}!</span>;
@@ -39,3 +42,42 @@ export function ConditionalGreeting({ isLoggedIn, name, todos }) {
     </>
   );
 }
+
+// using props to pass data
+export function AboutMe(props) {
+  return (
+    <p>
+      Hello! I'm {props.name}, a software developer with a passion for building
+      web applications.
+    </p>
+  );
+}
+
+// Prop Types Validation
+WelcomeUser.PropTypes = {
+  name: PropTypes.string.isRequired,
+};
+
+SkillsList.PropTypes = {
+  skills: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
+
+ConditionalGreeting.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
+  todos: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      text: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
+
+AboutMe.propTypes = {
+  name: PropTypes.string.isRequired,
+};

@@ -1,5 +1,5 @@
 import { OldWay } from "./OldWay.jsx";
-import WelcomeUser, { SkillsList } from "./Elements.jsx";
+import WelcomeUser, { SkillsList, AboutMe } from "./Elements.jsx";
 
 export function UserProfile() {
   const skills = [
@@ -20,10 +20,7 @@ export function UserProfile() {
       </div>
       <section>
         <h3>About Me</h3>
-        <p>
-          Hello! I'm Omar, a software developer with a passion for building web
-          applications.
-        </p>
+        <AboutMe name="Omar" />
         <h3>Skills</h3>
         <SkillsList skills={skills} />
       </section>
