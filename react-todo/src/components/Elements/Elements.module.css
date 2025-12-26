@@ -1,0 +1,47 @@
+/* WelcomeUser */
+.welcomeUser {
+  font-weight: 600;
+  color: var(--primary-color, #2563eb);
+}
+
+/* SkillsList */
+.skillsList {
+  padding-left: 1.2rem;
+}
+
+.skillItem {
+  margin-bottom: 0.4rem;
+  color: #374151;
+}
+
+/* ConditionalGreeting */
+.greetingTitle {
+  margin-bottom: 0.5rem;
+}
+
+.todoTitle {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.todoList {
+  padding-left: 1.2rem;
+}
+
+.todoItem {
+  margin-bottom: 0.3rem;
+}
+
+/* AboutMe */
+.aboutText {
+  line-height: 1.6;
+  color: #374151;
+}
+
+/* Card */
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #ffffff;
+}

@@ -1,4 +1,4 @@
-import { ConditionalGreeting } from "./components/Elements";
+import { ConditionalGreeting } from "./components/Elements/Elements";
 
 export default function App() {
   const todos = [

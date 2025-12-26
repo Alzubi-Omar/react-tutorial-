@@ -1,6 +1,6 @@
 import { OldWay } from "./OldWay.jsx";
-import WelcomeUser, { SkillsList, AboutMe } from "./Elements.jsx";
-import { Card } from "./Elements.jsx";
+import WelcomeUser, { SkillsList, AboutMe } from "./Elements/Elements.jsx";
+import { Card } from "./Elements/Elements.jsx";
 
 export function UserProfile() {
   const skills = [
