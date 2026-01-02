@@ -1,7 +1,7 @@
 // Creating Elements with Data (Dynamic)
 
 // Props Valdiation and Usage
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
 
 // styles
 import styles from "./Elements.module.css";
@@ -11,35 +11,12 @@ export default function WelcomeUser({ name }) {
   return <span className={styles.welcomeUser}>{name}!</span>;
 }
 
-// Creating Lists
-export function SkillsList({ skills }) {
-  return (
-    <ul>
-      {skills.map((skill) => (
-        <li key={skill.id} className={styles.skillsList}>
-          {skill.name}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
 // Conditional Elements
-export function ConditionalGreeting({ isLoggedIn, name, todos }) {
+export function ConditionalGreeting({ isLoggedIn, name }) {
   return isLoggedIn ? (
-    <>
-      <h2 className={styles.greetingTitle}>Welcome Back {name}</h2>
-      <h3 className={styles.todoTitle}>My Todo</h3>
-      <ul className={styles.todoList}>
-        {todos.map((todo) => (
-          <li key={todo.id} className={styles.todoItem}>
-            {todo.text}
-          </li>
-        ))}
-      </ul>
-    </>
+    <h2 className={styles.greetingTitle}>Welcome Back {name}</h2>
   ) : (
-    <h2>Please Log In</h2>
+    <h2 className={styles.greetingTitle}>Please Log In</h2>
   );
 }
 
@@ -68,24 +45,9 @@ WelcomeUser.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-SkillsList.propTypes = {
-  skills: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-};
-
 ConditionalGreeting.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
-  todos: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      text: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 AboutMe.propTypes = {

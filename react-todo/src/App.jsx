@@ -1,4 +1,6 @@
 import { ConditionalGreeting } from "./components/Elements/Elements";
+import { TodoList } from "./components/Lists/TodoList";
+import { Card } from "./components/Elements/Elements";
 
 export default function App() {
   const todos = [
@@ -20,7 +22,11 @@ export default function App() {
   return (
     <div>
       <h1>Todo App</h1>
-      <ConditionalGreeting isLoggedIn={true} name="Omar" todos={todos} />
+      <ConditionalGreeting isLoggedIn name="Omar" />
+
+      <Card title="My Todo">
+        <TodoList todos={todos} />
+      </Card>
     </div>
   );
 }
