@@ -6,17 +6,12 @@ import PropTypes from "prop-types";
 // styles
 import styles from "./Elements.module.css";
 
-// using destructuring to get name from props
-export default function WelcomeUser({ name }) {
-  return <span className={styles.welcomeUser}>{name}!</span>;
-}
-
 // Conditional Elements
 export function ConditionalGreeting({ isLoggedIn, name }) {
   return isLoggedIn ? (
     <h2 className={styles.greetingTitle}>Welcome Back {name}</h2>
   ) : (
-    <h2 className={styles.greetingTitle}>Please Log In</h2>
+    <h2 className={styles.greetingTitle}>Please Log In!</h2>
   );
 }
 
@@ -41,10 +36,6 @@ export function Card({ title, children }) {
 }
 
 // Prop Types Validation
-WelcomeUser.propTypes = {
-  name: PropTypes.string.isRequired,
-};
-
 ConditionalGreeting.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,

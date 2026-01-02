@@ -1,9 +1,12 @@
 import { OldWay } from "./OldWay.jsx";
-import WelcomeUser, { AboutMe } from "./Elements/Elements.jsx";
+import { AboutMe } from "./Elements/Elements.jsx";
 import { Card } from "./Elements/Elements.jsx";
 import { SkillsList } from "./Lists/SkillsList.jsx";
+import WelcomeUser from "./user/WelcomeUser.jsx";
 
 export function UserProfile() {
+  const isAuthenticated = true;
+
   const skills = [
     { id: 1, name: "JavaScript" },
     { id: 2, name: "React" },
@@ -15,7 +18,7 @@ export function UserProfile() {
       <h2>User Profile</h2>
       <div>
         <p>
-          Name: <WelcomeUser name="Omar" />
+          Name: <WelcomeUser isAuthenticated name="Omar" />
         </p>
 
         <p>Email: omar@example.com</p>
