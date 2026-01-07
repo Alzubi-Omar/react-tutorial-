@@ -5,38 +5,34 @@ import { LoginForm } from "./components/auth/LoginForm";
 
 export default function App() {
   // Authentication State Management
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [auth, setAuth] = useState({
+    isAuthenticated: false,
+    user: null,
+  });
 
   // handle login
-  const handleLogin = () => {
-    setIsAuthenticated(true);
+  const handleLogin = ({ username }) => {
+    setAuth({
+      isAuthenticated: true,
+      user: { username },
+    });
   };
 
-  // const todos = [
-  //   {
-  //     id: 1,
-  //     text: "Learn React",
-  //     //   completed: false, (later use)
-  //   },
-  //   {
-  //     id: 2,
-  //     text: "Build a Todo App",
-  //   },
-  //   {
-  //     id: 3,
-  //     text: "Master JavaScript",
-  //   },
-  // ];
+  // handle logout
+  const handleLogout = () => {
+    setAuth({ isAuthenticated: false, user: null });
+  };
 
-  if (!isAuthenticated) {
+  if (!auth.isAuthenticated) {
     return <LoginForm onLogin={handleLogin} />;
   }
-  return <div>Welcome to the Todo App!</div>;
-  // <div>
-  //   <h1>Todo App</h1>
-  //   <Card title="My Todo">
-  //     <TodoList todos={todos} />
-  //   </Card>
-  // </div>
-  // );
+
+  return (
+    <div>
+      <h1>Welcome to the Todo App, {auth.user?.username}!</h1>
+      <button type="button" onClick={handleLogout}>
+        Logout
+      </button>
+    </div>
+  );
 }
