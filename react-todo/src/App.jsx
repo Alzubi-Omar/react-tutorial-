@@ -1,6 +1,7 @@
+import { useState, useMemo } from "react";
 import { TodoList } from "./components/Lists/TodoList";
 import { Card } from "./components/Elements/Elements";
-import { useState, useMemo } from "react";
+import { UserProfile } from "./components/user/UserProfile";
 import { LoginForm } from "./components/auth/LoginForm";
 
 export default function App() {
@@ -37,10 +38,12 @@ export default function App() {
 
   return (
     <div>
-      <h1>Welcome to the Todo App, {auth.user?.username}!</h1>
-      <button type="button" onClick={handleLogout}>
-        Logout
-      </button>
+      <h1>Welcome to the Todo App!</h1>
+      <UserProfile
+        isAuthenticated={auth.isAuthenticated}
+        username={auth.user?.username || ""}
+        onLogout={handleLogout}
+      />
       <Card title="My Todo List">
         <TodoList todos={todos} />
       </Card>

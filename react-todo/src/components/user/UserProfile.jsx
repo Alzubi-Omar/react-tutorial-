@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useMemo } from "react";
 import { OldWay } from "../OldWay.jsx";
 import { AboutMe, Card, ConditionalGreeting } from "../Elements/Elements.jsx";
 import { SkillsList } from "../Lists/SkillsList.jsx";
@@ -33,13 +34,13 @@ export function UserProfile({ isAuthenticated, username, onLogout }) {
 
         {/* <p>Email: omar@example.com</p> */}
 
-        <button type="button" onClick={handleLogout}>
+        <button type="button" onClick={onLogout}>
           Logout
         </button>
       </div>
 
       <Card title="About Me">
-        <AboutMe name={user.username} />
+        <AboutMe name={username} />
       </Card>
       <Card title="Skills">
         <SkillsList skills={skills} />

@@ -34,6 +34,7 @@ export function LoginForm({ onLogin }) {
         }}
         required
         aria-invalid={!!error}
+        autoComplete="username"
       />
       <br />
       <label htmlFor="password">Password:</label>
@@ -41,9 +42,13 @@ export function LoginForm({ onLogin }) {
         type="password"
         id="password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => {
+          setPassword(e.target.value);
+          setError("");
+        }}
         required
         aria-invalid={!!error}
+        autoComplete="password"
       />
       <br />
       {error && (
@@ -51,7 +56,7 @@ export function LoginForm({ onLogin }) {
           {error}
         </p>
       )}
-      <button type="submit">Login </button>
+      <button type="submit">Login</button>
     </form>
   );
 }
