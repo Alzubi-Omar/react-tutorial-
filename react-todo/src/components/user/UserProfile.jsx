@@ -1,41 +1,45 @@
-import { useState } from "react";
+import PropTypes from "prop-types";
 import { OldWay } from "../OldWay.jsx";
-import { AboutMe, Card } from "../Elements/Elements.jsx";
+import { AboutMe, Card, ConditionalGreeting } from "../Elements/Elements.jsx";
 import { SkillsList } from "../Lists/SkillsList.jsx";
 import WelcomeUser from "./WelcomeUser.jsx";
 
-export function UserProfile() {
-  // const isAuthenticated = true;
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+export function UserProfile({ isAuthenticated, username, onLogout }) {
+  const skills = useMemo(
+    () => [
+      { id: 1, name: "JavaScript" },
+      { id: 2, name: "React" },
+      { id: 3, name: "Node.js" },
+    ],
+    []
+  );
 
-  const skills = [
-    { id: 1, name: "JavaScript" },
-    { id: 2, name: "React" },
-    { id: 3, name: "Node.js" },
-  ];
-
-  // Event handler for login/logout toggle
-  const toggleAuth = () => {
-    setIsAuthenticated((prevAuth) => !prevAuth);
-  };
+  // const handleLogin = ({ username, password }) => {
+  //   setUser({ username });
+  //   setIsAuthenticated(true);
+  //   void password; // just to avoid unused variable warning
+  // };
 
   return (
     <div id="user-profile">
       <h2>User Profile</h2>
+
+      <ConditionalGreeting isLoggedIn={isAuthenticated} name={username} />
       <div>
         <p>
-          Name: <WelcomeUser isAuthenticated={isAuthenticated} name="Omar" />
+          Name:
+          <WelcomeUser isAuthenticated={isAuthenticated} name={username} />
         </p>
 
-        <p>Email: omar@example.com</p>
+        {/* <p>Email: omar@example.com</p> */}
 
-        <button type="button" onClick={toggleAuth}>
-          {isAuthenticated ? "Logout" : " Login"}
+        <button type="button" onClick={handleLogout}>
+          Logout
         </button>
       </div>
 
       <Card title="About Me">
-        <AboutMe name="Omar" />
+        <AboutMe name={user.username} />
       </Card>
       <Card title="Skills">
         <SkillsList skills={skills} />
@@ -47,3 +51,9 @@ export function UserProfile() {
     </div>
   );
 }
+
+UserProfile.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  username: PropTypes.string.isRequired,
+  onLogout: PropTypes.func.isRequired,
+};

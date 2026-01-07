@@ -1,9 +1,17 @@
 import { TodoList } from "./components/Lists/TodoList";
 import { Card } from "./components/Elements/Elements";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { LoginForm } from "./components/auth/LoginForm";
 
 export default function App() {
+  const todos = useMemo(
+    () => [
+      { id: 1, text: "Learn React" },
+      { id: 2, text: "Build a Todo App" },
+      { id: 3, text: "Master JavaScript" },
+    ],
+    []
+  );
   // Authentication State Management
   const [auth, setAuth] = useState({
     isAuthenticated: false,
@@ -33,6 +41,9 @@ export default function App() {
       <button type="button" onClick={handleLogout}>
         Logout
       </button>
+      <Card title="My Todo List">
+        <TodoList todos={todos} />
+      </Card>
     </div>
   );
 }
