@@ -32,21 +32,23 @@ export default function App() {
     setAuth({ isAuthenticated: false, user: null });
   };
 
-  if (!auth.isAuthenticated) {
-    return <LoginForm onLogin={handleLogin} />;
-  }
-
   return (
     <div>
-      <h1>Welcome to the Todo App!</h1>
-      <UserProfile
-        isAuthenticated={auth.isAuthenticated}
-        username={auth.user?.username || ""}
-        onLogout={handleLogout}
-      />
-      <Card title="My Todo List">
-        <TodoList todos={todos} />
-      </Card>
+      {!auth.isAuthenticated ? (
+        <LoginForm onLogin={handleLogin} />
+      ) : (
+        <>
+          <h1>Welcome to the Todo App!</h1>
+          <UserProfile
+            isAuthenticated={auth.isAuthenticated}
+            username={auth.user?.username || ""}
+            onLogout={handleLogout}
+          />
+          <Card title="My Todo List">
+            <TodoList todos={todos} />
+          </Card>
+        </>
+      )}
     </div>
   );
 }
