@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { OldWay } from "../OldWay.jsx";
 import { AboutMe, Card, ConditionalGreeting } from "../Elements/Elements.jsx";
 import { SkillsList } from "../Lists/SkillsList.jsx";
@@ -12,7 +12,16 @@ const INITIAL_SKILLS = [
 ];
 
 export function UserProfile({ isAuthenticated, username, onLogout }) {
-  const [skills, setSkills] = useState(INITIAL_SKILLS);
+  // const [skills, setSkills] = useState(INITIAL_SKILLS);
+  const [skills, setSkills] = useState(() => {
+    const saved = localStorage.getItem("skills");
+    return saved ? JSON.parse(saved) : INITIAL_SKILLS;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("skills", JSON.stringify(skills));
+  }, [skills]);
+
   const [newSkill, setNewSkill] = useState("");
 
   const handleAddSkill = () => {

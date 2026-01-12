@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { TodoList } from "./components/Lists/TodoList";
 import { Card } from "./components/Elements/Elements";
 import { UserProfile } from "./components/user/UserProfile";
@@ -13,6 +13,7 @@ export default function App() {
     ],
     []
   );
+
   // Authentication State Management
   const [auth, setAuth] = useState({
     isAuthenticated: false,
@@ -31,6 +32,14 @@ export default function App() {
   const handleLogout = () => {
     setAuth({ isAuthenticated: false, user: null });
   };
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      console.log("User logged in:", auth.user?.username);
+    } else {
+      console.log("User logged out");
+    }
+  }, [auth.isAuthenticated]);
 
   return (
     <div>
