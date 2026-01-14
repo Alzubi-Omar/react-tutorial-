@@ -1,18 +1,17 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { TodoList } from "./components/Lists/TodoList";
 import { Card } from "./components/Elements/Elements";
 import { UserProfile } from "./components/user/UserProfile";
 import { LoginForm } from "./components/auth/LoginForm";
 
 export default function App() {
-  const todos = useMemo(
-    () => [
-      { id: 1, text: "Learn React" },
-      { id: 2, text: "Build a Todo App" },
-      { id: 3, text: "Master JavaScript" },
-    ],
-    []
-  );
+  const [todos, setTodos] = useState([
+    { id: 1, text: "Learn React" },
+    { id: 2, text: "Build a Todo App" },
+    { id: 3, text: "Master JavaScript" },
+  ]);
+  const [loadingTodos, setLoadingTodos] = useState(false);
+  const [todoError, setTodoError] = useState("");
 
   // Authentication State Management
   const [auth, setAuth] = useState({
@@ -31,14 +30,32 @@ export default function App() {
   // handle logout
   const handleLogout = () => {
     setAuth({ isAuthenticated: false, user: null });
+    setTodos([]);
+    setTodoError("");
+    setLoadingTodos("false");
   };
 
   useEffect(() => {
-    if (auth.isAuthenticated) {
-      console.log("User logged in:", auth.user?.username);
-    } else {
-      console.log("User logged out");
-    }
+    if (!auth.isAuthenticated) return;
+
+    setLoadingTodos(true);
+    setTodoError("");
+
+    fetch("https://jsonplaceholder.typicode.com/todos?_limit=5")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch todos");
+        return res.json();
+      })
+      .then((data) => {
+        const mapped = data.map((t) => ({ id: t.id, text: t.title }));
+        setTodos(mapped);
+      })
+      .catch(() => {
+        setTodoError("Could not load todos");
+      })
+      .finally(() => {
+        setLoadingTodos(false);
+      });
   }, [auth.isAuthenticated]);
 
   return (
@@ -54,7 +71,9 @@ export default function App() {
             onLogout={handleLogout}
           />
           <Card title="My Todo List">
-            <TodoList todos={todos} />
+            {loadingTodos && <p> Loading todos...</p>}
+            {todoError && <p>{todoError}</p>}
+            {!loadingTodos && !todoError && <TodoList todos={todos} />}
           </Card>
         </>
       )}
