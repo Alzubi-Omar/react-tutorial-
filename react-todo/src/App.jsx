@@ -4,12 +4,14 @@ import { Card } from "./components/Elements/Elements";
 import { UserProfile } from "./components/user/UserProfile";
 import { LoginForm } from "./components/auth/LoginForm";
 
+const INITIAL_TODOS = [
+  { id: 1, text: "Learn React" },
+  { id: 2, text: "Build a Todo App" },
+  { id: 3, text: "Master JavaScript" },
+];
+
 export default function App() {
-  const [todos, setTodos] = useState([
-    { id: 1, text: "Learn React" },
-    { id: 2, text: "Build a Todo App" },
-    { id: 3, text: "Master JavaScript" },
-  ]);
+  const [todos, setTodos] = useState(INITIAL_TODOS);
   const [loadingTodos, setLoadingTodos] = useState(false);
   const [todoError, setTodoError] = useState("");
 
@@ -47,8 +49,8 @@ export default function App() {
         return res.json();
       })
       .then((data) => {
-        const mapped = data.map((t) => ({ id: t.id, text: t.title }));
-        setTodos(mapped);
+        const mapped = data.map((t) => ({ id: `api-${t.id}`, text: t.title }));
+        setTodos((prev) => [...prev, ...mapped]);
       })
       .catch(() => {
         setTodoError("Could not load todos");
