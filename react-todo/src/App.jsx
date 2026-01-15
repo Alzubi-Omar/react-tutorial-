@@ -32,9 +32,9 @@ export default function App() {
   // handle logout
   const handleLogout = () => {
     setAuth({ isAuthenticated: false, user: null });
-    setTodos([]);
+    setTodos(INITIAL_TODOS);
     setTodoError("");
-    setLoadingTodos("false");
+    setLoadingTodos(false);
   };
 
   useEffect(() => {
@@ -50,7 +50,11 @@ export default function App() {
       })
       .then((data) => {
         const mapped = data.map((t) => ({ id: `api-${t.id}`, text: t.title }));
-        setTodos((prev) => [...prev, ...mapped]);
+        setTodos((prev) => {
+          const existing = new Set(prev.map((t) => t.id));
+          const uniqueNew = mapped.filter((t) => !existing.has(t.id));
+          return [...prev, ...uniqueNew];
+        });
       })
       .catch(() => {
         setTodoError("Could not load todos");
