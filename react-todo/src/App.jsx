@@ -40,28 +40,34 @@ export default function App() {
   useEffect(() => {
     if (!auth.isAuthenticated) return;
 
-    setLoadingTodos(true);
-    setTodoError("");
+    const loadTodos = async () => {
+      try {
+        setLoadingTodos(true);
+        setTodoError("");
 
-    fetch("https://jsonplaceholder.typicode.com/todos?_limit=5")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch todos");
-        return res.json();
-      })
-      .then((data) => {
+        const res = await fetch(
+          "https://jsonplaceholder.typicode.com/todos?_limit=5"
+        );
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch todos");
+        }
+
+        const data = await res.json();
+
         const mapped = data.map((t) => ({ id: `api-${t.id}`, text: t.title }));
         setTodos((prev) => {
           const existing = new Set(prev.map((t) => t.id));
           const uniqueNew = mapped.filter((t) => !existing.has(t.id));
           return [...prev, ...uniqueNew];
         });
-      })
-      .catch(() => {
+      } catch {
         setTodoError("Could not load todos");
-      })
-      .finally(() => {
+      } finally {
         setLoadingTodos(false);
-      });
+      }
+    };
+    loadTodos();
   }, [auth.isAuthenticated]);
 
   return (
