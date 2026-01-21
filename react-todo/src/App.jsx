@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
 import { TodoList } from "./components/Lists/TodoList";
 import { Card } from "./components/Elements/Elements";
 import { UserProfile } from "./components/user/UserProfile";
 import { LoginForm } from "./components/auth/LoginForm";
+import { useAuth } from "./hooks/useAuth";
+import { useTodos } from "./hooks/useTodos";
 
 const INITIAL_TODOS = [
   { id: 1, text: "Learn React" },
@@ -11,69 +12,27 @@ const INITIAL_TODOS = [
 ];
 
 export default function App() {
-  const [todos, setTodos] = useState(INITIAL_TODOS);
-  const [loadingTodos, setLoadingTodos] = useState(false);
-  const [todoError, setTodoError] = useState("");
+  const { auth, login, logout } = useAuth();
 
-  // Authentication State Management
-  const [auth, setAuth] = useState({
-    isAuthenticated: false,
-    user: null,
-  });
+  const {
+    todos,
+    loadingTodos,
+    todoError,
+    newTodoText,
+    setNewTodoText,
+    addingTodo,
+    addTodo,
+    resetTodos,
+  } = useTodos(auth.isAuthenticated);
 
-  // handle login
-  const handleLogin = ({ username }) => {
-    setAuth({
-      isAuthenticated: true,
-      user: { username },
-    });
-  };
-
-  // handle logout
   const handleLogout = () => {
-    setAuth({ isAuthenticated: false, user: null });
-    setTodos(INITIAL_TODOS);
-    setTodoError("");
-    setLoadingTodos(false);
+    logout();
+    resetTodos();
   };
-
-  useEffect(() => {
-    if (!auth.isAuthenticated) return;
-
-    const loadTodos = async () => {
-      try {
-        setLoadingTodos(true);
-        setTodoError("");
-
-        const res = await fetch(
-          "https://jsonplaceholder.typicode.com/todos?_limit=5"
-        );
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch todos");
-        }
-
-        const data = await res.json();
-
-        const mapped = data.map((t) => ({ id: `api-${t.id}`, text: t.title }));
-        setTodos((prev) => {
-          const existing = new Set(prev.map((t) => t.id));
-          const uniqueNew = mapped.filter((t) => !existing.has(t.id));
-          return [...prev, ...uniqueNew];
-        });
-      } catch {
-        setTodoError("Could not load todos");
-      } finally {
-        setLoadingTodos(false);
-      }
-    };
-    loadTodos();
-  }, [auth.isAuthenticated]);
-
   return (
     <div>
       {!auth.isAuthenticated ? (
-        <LoginForm onLogin={handleLogin} />
+        <LoginForm onLogin={login} />
       ) : (
         <>
           <h1>Welcome to the Todo App!</h1>
@@ -82,7 +41,19 @@ export default function App() {
             username={auth.user?.username || ""}
             onLogout={handleLogout}
           />
+
           <Card title="My Todo List">
+            <div>
+              <input
+                value={newTodoText}
+                onChange={(e) => setNewTodoText(e.target.value)}
+                placeholder="Add a new todo"
+              />
+              <button type="button" onClick={addTodo} disabled={addingTodo}>
+                {addingTodo ? "Adding..." : "Add Todo"}
+              </button>
+            </div>
+
             {loadingTodos && <p> Loading todos...</p>}
             {todoError && <p>{todoError}</p>}
             {!loadingTodos && !todoError && <TodoList todos={todos} />}
