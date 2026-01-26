@@ -11,7 +11,8 @@
 
 .skillItem {
   margin-bottom: 0.4rem;
-  color: #374151;
+  /* color: #374151; */
+  color: var(--text-secondary);
 }
 
 /* ConditionalGreeting */
@@ -35,7 +36,7 @@
 /* AboutMe */
 .aboutText {
   line-height: 1.6;
-  color: #374151;
+  color: var(--text-secondary);
 }
 
 /* Card */
@@ -44,4 +45,12 @@
   border-radius: 8px;
   padding: 1rem;
   background-color: #ffffff;
+}
+
+.light {
+  background: #f5f5f5;
+}
+
+.dark {
+  background: #222;
 }

@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 
 // styles
 import styles from "./Elements.module.css";
+import { useTheme } from "../../context/ThemeContext";
 
 // Conditional Elements
 export function ConditionalGreeting({ isLoggedIn, name }) {
@@ -17,8 +18,9 @@ export function ConditionalGreeting({ isLoggedIn, name }) {
 
 // using props to pass data
 export function AboutMe(props) {
+  const { theme } = useTheme();
   return (
-    <p className={styles.aboutText}>
+    <p className={`${styles.aboutText} ${styles[theme]}`}>
       Hello! I'm {props.name}, a software developer with a passion for building
       web applications.
     </p>
@@ -27,8 +29,9 @@ export function AboutMe(props) {
 
 // Child component
 export function Card({ title, children }) {
+  const { theme } = useTheme();
   return (
-    <div className={styles.card}>
+    <div className={`${styles.card} ${styles[theme]}`}>
       <h3>{title}</h3>
       {children}
     </div>
