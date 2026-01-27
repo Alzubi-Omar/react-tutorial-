@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export function useUser(isEnabled) {
+export function useUsers(isEnabled) {
   const [users, setUsers] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(false);
   const [userError, setUsersError] = useState("");
