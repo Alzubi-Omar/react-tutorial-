@@ -6,6 +6,7 @@ import { useAuth } from "./hooks/useAuth";
 import { useTodos } from "./hooks/useTodos";
 import { useTheme } from "./context/ThemeContext";
 import "./index.css";
+import { Collaborators } from "./components/collaborators/Collaborators";
 
 const INITIAL_TODOS = [
   { id: 1, text: "Learn React" },
@@ -46,12 +47,13 @@ export default function App() {
           <LoginForm onLogin={login} />
         ) : (
           <>
-            <h1>Welcome to the Todo App!</h1>
             <UserProfile
               isAuthenticated={auth.isAuthenticated}
               username={auth.user?.username || ""}
               onLogout={handleLogout}
             />
+
+            <Collaborators isEnabled={auth.isAuthenticated} />
 
             <Card title="My Todo List">
               <div>
