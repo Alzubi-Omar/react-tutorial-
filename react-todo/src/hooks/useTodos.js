@@ -36,7 +36,7 @@ export function useTodos(isAuthenticated) {
         // call API
         const res = await fetch(
           "https://jsonplaceholder.typicode.com/todos?_limit=5",
-          { signal: controller.signal }
+          { signal: controller.signal },
         );
 
         if (!res.ok) {
@@ -70,7 +70,7 @@ export function useTodos(isAuthenticated) {
   }, [isAuthenticated]);
 
   // POST: add todo
-  const addTodo = async () => {
+  const onAddTodo = async () => {
     const text = newTodoText.trim();
     if (!text || addingTodo) return;
 
@@ -115,7 +115,7 @@ export function useTodos(isAuthenticated) {
     newTodoText,
     setNewTodoText,
     addingTodo,
-    addTodo,
+    onAddTodo,
     resetTodos,
   };
 }

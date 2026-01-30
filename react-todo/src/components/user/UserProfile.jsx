@@ -12,7 +12,6 @@ const INITIAL_SKILLS = [
 ];
 
 export function UserProfile({ isAuthenticated, username, onLogout }) {
-  // const [skills, setSkills] = useState(INITIAL_SKILLS);
   const [skills, setSkills] = useState(() => {
     const saved = localStorage.getItem("skills");
     return saved ? JSON.parse(saved) : INITIAL_SKILLS;
