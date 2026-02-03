@@ -45,7 +45,7 @@ export function UserProfile({ isAuthenticated, username, onLogout }) {
     if (!clean) return;
 
     setSkills((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, name: clean } : s))
+      prev.map((s) => (s.id === id ? { ...s, name: clean } : s)),
     );
   };
 

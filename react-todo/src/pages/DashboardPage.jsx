@@ -3,6 +3,7 @@ import { Card } from "../components/Elements/Elements";
 import { TodoList } from "../components/Lists/TodoList";
 import { UserProfile } from "../components/user/UserProfile";
 import { Collaborators } from "../components/collaborators/Collaborators";
+import { useTheme } from "../context/ThemeContext";
 
 export function DashboardPage({
   username,
@@ -15,9 +16,15 @@ export function DashboardPage({
   addingTodo,
   onAddTodo,
 }) {
+  const { theme, toggleTheme } = useTheme();
   return (
     <>
-      <h1>Welcome to the Todo App!</h1>
+      <header>
+        <h1>Welcome to the Todo App!</h1>
+        <button onClick={toggleTheme}>
+          Switch to {theme === "light" ? "Dark" : "light"} Mode
+        </button>
+      </header>
 
       <UserProfile isAuthenticated username={username} onLogout={onLogout} />
 
@@ -43,7 +50,7 @@ export function DashboardPage({
   );
 }
 
-DashboardPage.prototype = {
+DashboardPage.propTypes = {
   username: PropTypes.string.isRequired,
   onLogout: PropTypes.func.isRequired,
   todos: PropTypes.array.isRequired,

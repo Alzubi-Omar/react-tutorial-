@@ -1,22 +1,13 @@
-import { TodoList } from "./components/Lists/TodoList";
-import { Card } from "./components/Elements/Elements";
-import { UserProfile } from "./components/user/UserProfile";
-import { LoginForm } from "./components/auth/LoginForm";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import { useTodos } from "./hooks/useTodos";
-import { useTheme } from "./context/ThemeContext";
-import "./index.css";
-import { Collaborators } from "./components/collaborators/Collaborators";
 
-const INITIAL_TODOS = [
-  { id: 1, text: "Learn React" },
-  { id: 2, text: "Build a Todo App" },
-  { id: 3, text: "Master JavaScript" },
-];
+import { LoginPage } from "./pages/LoginPage";
+import { DashboardPage } from "./pages/DashboardPage";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
+import "./index.css";
 
 export default function App() {
-  const { theme, toggleTheme } = useTheme();
-
   const { auth, login, logout } = useAuth();
 
   const {
@@ -26,7 +17,7 @@ export default function App() {
     newTodoText,
     setNewTodoText,
     addingTodo,
-    addTodo,
+    onAddTodo,
     resetTodos,
   } = useTodos(auth.isAuthenticated);
 
@@ -35,45 +26,34 @@ export default function App() {
     resetTodos();
   };
   return (
-    <div className={`app ${theme}`}>
-      <header>
-        <h1>Welcome to the Todo App!</h1>
-        <button onClick={toggleTheme}>
-          Switch to {theme === "light" ? "Dark" : "light"} Mode
-        </button>
-      </header>
-      <div>
-        {!auth.isAuthenticated ? (
-          <LoginForm onLogin={login} />
-        ) : (
-          <>
-            <UserProfile
-              isAuthenticated={auth.isAuthenticated}
+    <Routes>
+      {/* Default */}
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+
+      {/* Public */}
+      <Route path="login" element={<LoginPage onLogin={login} />} />
+
+      {/* Protected */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute isAuthenticated={auth.isAuthenticated}>
+            <DashboardPage
               username={auth.user?.username || ""}
               onLogout={handleLogout}
+              todos={todos}
+              loadingTodos={loadingTodos}
+              todoError={todoError}
+              newTodoText={newTodoText}
+              setNewTodoText={setNewTodoText}
+              addingTodo={addingTodo}
+              onAddTodo={onAddTodo}
             />
-
-            <Collaborators isEnabled={auth.isAuthenticated} />
-
-            <Card title="My Todo List">
-              <div>
-                <input
-                  value={newTodoText}
-                  onChange={(e) => setNewTodoText(e.target.value)}
-                  placeholder="Add a new todo"
-                />
-                <button type="button" onClick={addTodo} disabled={addingTodo}>
-                  {addingTodo ? "Adding..." : "Add Todo"}
-                </button>
-              </div>
-
-              {loadingTodos && <p> Loading todos...</p>}
-              {todoError && <p>{todoError}</p>}
-              {!loadingTodos && !todoError && <TodoList todos={todos} />}
-            </Card>
-          </>
-        )}
-      </div>
-    </div>
+          </ProtectedRoute>
+        }
+      />
+      {/* Fallback */}
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
   );
 }

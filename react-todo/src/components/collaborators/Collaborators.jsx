@@ -27,6 +27,6 @@ export function Collaborators({ isEnabled }) {
   );
 }
 
-Collaborators.prototype = {
+Collaborators.propTypes = {
   isEnabled: PropTypes.bool.isRequired,
 };
