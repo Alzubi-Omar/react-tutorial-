@@ -1,7 +1,7 @@
 /* WelcomeUser */
 .welcomeUser {
   font-weight: 600;
-  color: var(--primary-color, #2563eb);
+  color: var(--primary-color);
 }
 
 /* SkillsList */
@@ -11,7 +11,6 @@
 
 .skillItem {
   margin-bottom: 0.4rem;
-  /* color: #374151; */
   color: var(--text-secondary);
 }
 
@@ -20,37 +19,23 @@
   margin-bottom: 0.5rem;
 }
 
-.todoTitle {
-  margin-top: 1rem;
-  font-size: 1rem;
-}
-
 .todoList {
   padding-left: 1.2rem;
 }
 
 .todoItem {
   margin-bottom: 0.3rem;
+  color: var(--text-secondary);
 }
 
-/* AboutMe */
 .aboutText {
   line-height: 1.6;
   color: var(--text-secondary);
 }
 
-/* Card */
 .card {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 1rem;
-  background-color: #ffffff;
-}
-
-.light {
-  background: #f5f5f5;
-}
-
-.dark {
-  background: #222;
+  background-color: var(--card-bg);
 }

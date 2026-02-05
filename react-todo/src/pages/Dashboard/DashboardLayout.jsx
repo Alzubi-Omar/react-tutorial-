@@ -9,14 +9,14 @@ export function DashboardLayout({ username, onLogout }) {
   const { theme, toggleTheme } = useTheme();
   return (
     <>
-      <header>
+      <header className={styles.header}>
         <h1>Welcome to the Todo App!</h1>
         <button type="button" onClick={toggleTheme}>
           Switch to {theme === "light" ? "Dark" : "Light"} Mode
         </button>
       </header>
 
-      <nav>
+      <nav className={styles.nav}>
         <NavLink
           to="todos"
           className={({ isActive }) =>
