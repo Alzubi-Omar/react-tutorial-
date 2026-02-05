@@ -3,8 +3,11 @@ import { useAuth } from "./hooks/useAuth";
 import { useTodos } from "./hooks/useTodos";
 
 import { LoginPage } from "./pages/LoginPage";
-import { DashboardPage } from "./pages/DashboardPage";
+import { DashboardLayout } from "./pages/Dashboard/DashboardLayout";
+import { TodosPage } from "./pages/TodosPage";
+import { CollaboratorsPage } from "./pages/CollaboratorsPage";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
+
 import "./index.css";
 
 export default function App() {
@@ -33,14 +36,26 @@ export default function App() {
       {/* Public */}
       <Route path="login" element={<LoginPage onLogin={login} />} />
 
-      {/* Protected */}
+      {/* Protected + Nested */}
       <Route
         path="/dashboard"
         element={
           <ProtectedRoute isAuthenticated={auth.isAuthenticated}>
-            <DashboardPage
+            <DashboardLayout
               username={auth.user?.username || ""}
               onLogout={handleLogout}
+            />
+          </ProtectedRoute>
+        }
+      >
+        {/* index route: /dashboard */}
+        <Route index element={<Navigate to="todos" replace />} />
+
+        {/* child route: /dashboard/todos */}
+        <Route
+          path="todos"
+          element={
+            <TodosPage
               todos={todos}
               loadingTodos={loadingTodos}
               todoError={todoError}
@@ -49,9 +64,13 @@ export default function App() {
               addingTodo={addingTodo}
               onAddTodo={onAddTodo}
             />
-          </ProtectedRoute>
-        }
-      />
+          }
+        />
+
+        {/* child route: /dashboard/collaborators */}
+        <Route path="collaborators" element={<CollaboratorsPage />} />
+      </Route>
+
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
