@@ -1,5 +1,8 @@
 import { Collaborators } from "../components/collaborators/Collaborators";
+import { useLocation } from "react-router-dom";
 
 export function CollaboratorsPage() {
-  return <Collaborators isEnabled />;
+  const { state } = useLocation();
+  const isEnabled = state?.from === "todos";
+  return <Collaborators isEnabled={isEnabled} />;
 }

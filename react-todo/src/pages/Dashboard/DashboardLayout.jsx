@@ -1,4 +1,4 @@
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
 import { Outlet } from "react-router-dom";
 import { UserProfile } from "../../components/user/UserProfile";
 import { useTheme } from "../../context/ThemeContext";
@@ -28,6 +28,7 @@ export function DashboardLayout({ username, onLogout }) {
 
         <NavLink
           to="collaborators"
+          state={{ from: "todos" }}
           className={({ isActive }) =>
             isActive ? `${styles.link} ${styles.active}` : styles.link
           }
